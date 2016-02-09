@@ -196,12 +196,97 @@ public class Controlador {
 
     public static Vector mShell(Modelo mod)
     {
-        
+        int INT;
+        int i;
+        int AUX;
+        boolean BAND;
+        Vector<Integer> v = mod.getVector();
+
+        INT = v.size();
+
+        while(INT > 1)
+        {
+            INT = (INT / 2);
+            BAND = true;
+
+            while(BAND)
+            {
+                BAND = false;
+                i = 0;
+
+                while((i+INT) <= v.size() - 1)
+                {
+                    if(v.get(i) > v.get(i+INT))
+                    {
+                        AUX = v.get(i);
+                        v.set(i,v.get(i+INT));
+                        v.set(i+INT,AUX);
+                        BAND = true;
+                    }
+
+                    i++;
+                }
+            }
+        }
+
+        return v;
     }
 
     public static Vector mQickSort(Modelo mod, int INI, int FIN)
     {
-        
+        int IZQ, DER, POS, AUX;
+        //int cont = 1;
+        boolean BAND;
+        Vector<Integer> v = mod.getVector();
+
+        IZQ = INI;
+        DER = FIN;
+        POS = INI;
+        BAND = true;
+
+        while(BAND)
+        {
+            BAND = false;
+
+            while((v.get(POS) <= v.get(DER)) && (POS != DER))
+            {
+                DER--;
+            }
+
+            if(POS != DER)
+            {
+                AUX = v.get(POS);
+                v.set(POS,v.get(DER));
+                v.set(DER,AUX);
+                POS = DER;
+
+                while((v.get(POS) >= v.get(IZQ)) && (POS != IZQ))
+                {
+                    IZQ++;
+                }
+
+                if(POS != IZQ)
+                {
+                    BAND = true;
+                    AUX = v.get(POS);
+                    v.set(POS,v.get(IZQ));
+                    v.set(IZQ,AUX);
+                    POS  = IZQ;
+                }
+            }
+        }
+
+        if((POS - 1) > INI)
+        {
+            mQickSort(mod,INI,(POS-1));
+        }
+
+        if(FIN > (POS + 1))
+        {
+            mQickSort(mod,(POS+1),FIN);
+        }
+
+        return v;
     }
 
     public static Vector mHeapSort(Modelo mod)
